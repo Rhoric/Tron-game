@@ -1,0 +1,354 @@
+<html>
+
+<head>
+	<title>Troooon</title>
+
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="Estilo.css" />
+	<script src="JavaScript.js"></script>
+
+	<script type="text/javascript" src="js/libs/jquery/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/libs/three/three.js"></script>
+	<script type="text/javascript">
+
+
+
+		var scene;
+		var camera;
+		var renderer;
+
+		var clock;
+
+		$(document).ready(function () {
+
+			clock = new THREE.Clock();
+
+			var visibleSize = { width: window.innerWidth, height: window.innerHeight };
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);
+			camera.position.z = 2;
+
+			renderer = new THREE.WebGLRenderer({ precision: "mediump" });
+			renderer.setClearColor(new THREE.Color(0, 0, 0));
+			renderer.setPixelRatio(visibleSize.width / visibleSize.height);
+			renderer.setSize(visibleSize.width, visibleSize.height);
+
+			var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.8);
+			scene.add(ambientLight);
+
+			var directionalLight = new THREE.DirectionalLight(new THREE.Color(.3, .1, .3), 0.4);
+			directionalLight.position.set(0.4, 0, 1);
+			var directionalLight2 = directionalLight.clone();
+			directionalLight2.position.set(-0.4, 0, 1);
+			scene.add(directionalLight);
+			scene.add(directionalLight2);
+
+			$("#scene-section").append(renderer.domElement);
+
+			//cubo1
+			var geometria = new THREE.BoxGeometry(.2, 2.5, .2);
+			var material = new THREE.MeshBasicMaterial({
+				color: new THREE.Color(.7, .7, 0)
+			});
+
+			//cuboG
+			var geometria2 = new THREE.BoxGeometry(.3, .15, .3);
+			var material2 = new THREE.MeshBasicMaterial({
+				color: new THREE.Color(.7, 0, 0)
+			});
+
+			//cuboP
+			var geometria3 = new THREE.BoxGeometry(.05, .3, .05);
+			var material3 = new THREE.MeshBasicMaterial({
+				color: new THREE.Color(.7, 0, 0)
+			});
+
+
+			var cubo = new THREE.Mesh(geometria, material);
+			cubo.rotation.z = THREE.Math.degToRad(90);
+
+			//Clonar cubo1 para consumir menos recursos
+			var cubo2 = cubo.clone();
+			cubo2.rotation.z = THREE.Math.degToRad(0);
+
+			var cubo3 = cubo.clone();
+			cubo3.rotation.z = THREE.Math.degToRad(45)
+
+			var cubo4 = cubo.clone();
+			cubo4.rotation.z = THREE.Math.degToRad(135)
+
+
+			var cuboP = new THREE.Mesh(geometria3, material3);
+			cuboP.position.y = 1;
+			cuboP.position.z = .3;
+
+			var cuboP2 = cuboP.clone();
+			cuboP2.position.y = -1;
+			cuboP2.position.z = .3;
+
+			var cuboP3 = cuboP.clone();
+			cuboP3.position.y = 1;
+			cuboP3.position.z = .3;
+			cuboP3.rotation.z = THREE.Math.degToRad(-45);
+
+			var cuboP4 = cuboP.clone();
+			cuboP4.position.y = -1;
+			cuboP4.position.z = .3;
+			cuboP4.rotation.z = THREE.Math.degToRad(-45);
+
+
+			var cuboP5 = cuboP.clone();
+			cuboP5.position.y = 1;
+			cuboP5.position.z = .3;
+			cuboP5.rotation.z = THREE.Math.degToRad(-135);
+
+
+			var cuboP6 = cuboP.clone();
+			cuboP6.position.y = -1;
+			cuboP6.position.z = .3;
+			cuboP6.rotation.z = THREE.Math.degToRad(-135);
+
+
+			var cuboP7 = cuboP.clone();
+			cuboP7.position.y = 1;
+			cuboP7.position.z = .3;
+			cuboP7.rotation.z = THREE.Math.degToRad(-90);
+
+
+			var cuboP8 = cuboP.clone();
+			cuboP8.position.y = -1;
+			cuboP8.position.z = .3;
+			cuboP8.rotation.z = THREE.Math.degToRad(-90);
+
+
+
+			var cuboG = new THREE.Mesh(geometria2, material2);
+			cuboG.position.y = -.15;
+
+			var cuboG2 = cuboG.clone();
+			cuboG2.position.y = -.15;
+
+			var cuboG3 = cuboG.clone();
+			cuboG3.position.y = -.15;
+			var cuboG4 = cuboG.clone();
+			cuboG4.position.y = -.15;
+			var cuboG5 = cuboG.clone();
+			cuboG5.position.y = -.15;
+			var cuboG6 = cuboG.clone();
+			cuboG6.position.y = -.15;
+			var cuboG7 = cuboG.clone();
+			cuboG7.position.y = -.15;
+			var cuboG8 = cuboG.clone();
+			cuboG8.position.y = -.15;
+			//cuboG.position.y = .75;
+			//cuboG.position.z = .3;
+
+
+			//cubo.rotation.z = THREE.Math.degToRad(90);
+
+			//Nombrar cubos para llamarlos en otro lado
+			cubo.name = "cubo01";
+			cubo2.name = "cubo02";
+			cubo3.name = "cubo03";
+			cubo4.name = "cubo04";
+			cuboP.name = "cuboP1";
+			cuboP2.name = "cuboP2";
+			cuboP3.name = "cuboP3";
+			cuboP4.name = "cuboP4";
+			cuboP5.name = "cuboP5";
+			cuboP6.name = "cuboP6";
+			cuboP7.name = "cuboP7";
+			cuboP8.name = "cuboP8";
+			cuboG.name = "cuboG1";
+
+			//creacion de objeto vacio
+			var vacio = new THREE.Object3D();
+			vacio.name = "vacio";
+
+			//si pones algun objeto y pones .add otro objeto, esta emparentando el segundo objeto al primera, todo lo que le pase al´padre le afecta al hijo y su posicion en 0 es el padre
+			cuboP.add(cuboG);
+			cuboP2.add(cuboG2);
+			cuboP3.add(cuboG3);
+			cuboP4.add(cuboG4);
+			cuboP5.add(cuboG5);
+			cuboP6.add(cuboG6);
+			cuboP7.add(cuboG7);
+			cuboP8.add(cuboG8);
+
+			cubo2.add(cuboP);
+			cubo2.add(cuboP2);
+			cubo3.add(cuboP3);
+			cubo3.add(cuboP4);
+			cubo4.add(cuboP5);
+			cubo4.add(cuboP6);
+			cubo.add(cuboP7);
+			cubo.add(cuboP8);
+
+			vacio.add(cubo);
+			vacio.add(cubo2);
+			vacio.add(cubo3);
+			vacio.add(cubo4);
+			scene.add(vacio);
+			//si agregar a la escena un objeto ya emparentado se va a quitar la emparentacion
+
+			render();
+		});
+		function render() {
+			requestAnimationFrame(render);
+
+			//llamar los cubos
+			var vacio = scene.getObjectByName("vacio");
+			var cubo1 = scene.getObjectByName("cubo01");
+			var cubo2 = scene.getObjectByName("cubo02");
+			var cuboP = scene.getObjectByName("cuboP1");
+			var cuboP2 = scene.getObjectByName("cuboP2");
+			var cuboP3 = scene.getObjectByName("cuboP3");
+			var cuboP4 = scene.getObjectByName("cuboP4");
+			var cuboP5 = scene.getObjectByName("cuboP5");
+			var cuboP6 = scene.getObjectByName("cuboP6");
+			var cuboP7 = scene.getObjectByName("cuboP7");
+			var cuboP8 = scene.getObjectByName("cuboP8");
+
+
+
+			//Delta solo se puede llamar 1 vez por frame entonces lo ponemos en variable
+			var delta = clock.getDelta();
+
+			//Mutiplica la rotacion por tiempo delta
+			vacio.rotation.z -= THREE.Math.degToRad(30) * delta;
+			cuboP.rotation.z += THREE.Math.degToRad(30) * delta;
+			cuboP2.rotation.z += THREE.Math.degToRad(30) * delta;
+			cuboP3.rotation.z += THREE.Math.degToRad(30) * delta;
+			cuboP4.rotation.z += THREE.Math.degToRad(30) * delta;
+			cuboP5.rotation.z += THREE.Math.degToRad(30) * delta;
+			cuboP7.rotation.z += THREE.Math.degToRad(30) * delta;
+			cuboP6.rotation.z += THREE.Math.degToRad(30) * delta;
+			cuboP8.rotation.z += THREE.Math.degToRad(30) * delta;
+			//cuboG.rotation.z += THREE.Math.degToRad(30) * delta;
+
+			//cubo1.rotation.y += THREE.Math.degToRad(100) * delta;
+			//cubo2.rotation.y -= THREE.Math.degToRad(100) * delta;
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//Delta Time: Para estandarizar los movimientos para que sin importar los fps siempre avance lo mismo en 1 segundo//
+			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			renderer.render(scene, camera);
+		}
+	</script>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+						Opciones
+					</button>
+				</li>
+
+			</ul>
+		</div>
+		<div class="mx-auto order-0">
+			<a class="navbar-brand mx-auto" href="#">T R O N</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="#">Log in</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Registrarse</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<div id="scene-section" />
+
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Opciones</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="modal-body">
+						<div class="text-center">
+							<i class="far fa-file-alt fa-4x mb-3 animated rotateIn"></i>
+							<p>
+								<strong>Gameplay</strong>
+							</p>
+						</div>
+
+						<hr>
+
+						<!-- Radio -->
+						<p class="text-center">
+							<strong>Numero de jugadores</strong>
+						</p>
+						<div class="form-check mb-4">
+							<input class="form-check-input" name="group1" type="radio" id="radio-179" value="option1"
+								checked>
+							<label class="form-check-label" for="radio-179">Un jugador</label>
+						</div>
+
+						<div class="form-check mb-4">
+							<input class="form-check-input" name="group1" type="radio" id="radio-279" value="option2">
+							<label class="form-check-label" for="radio-279">Dos jugadores</label>
+						</div>
+
+						<div class="text-center">
+							<i class="far fa-file-alt fa-4x mb-3 animated rotateIn"></i>
+							<p>
+								<strong>Audio</strong>
+							</p>
+						</div>
+						<hr>
+
+						<!-- Radio -->
+						<p class="text-center">
+							<strong>Volumen</strong>
+						</p>
+						<div class="form-check mb-4">
+							<input class="form-check-input" name="group2" type="radio" id="radio-179" value="option1"
+								checked>
+							<label class="form-check-label" for="radio-179">Mudo</label>
+						</div>
+
+						<div class="form-check mb-4">
+							<input class="form-check-input" name="group2" type="radio" id="radio-279" value="option2">
+							<label class="form-check-label" for="radio-279">Volumen</label>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
